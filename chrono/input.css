@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  font-family: "Roboto", sans-serif;
+}
+.inspiration-font {
+  font-family: "Inspiration", cursive;
+}

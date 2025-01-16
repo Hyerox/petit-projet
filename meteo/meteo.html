@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="meteo.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" id="place" placeholder="Enter City Name" spellcheck="false">
+            <button id="searchBtn"><img class="searchLogo" src="images/search.png"></button>
+        </div>
+        <div class="weather">
+            <img src="images/star.png" class="weather-icon" title="">
+            <h1 class="temp">temperature</h1>
+            <h2 class="city">city</h2>
+            <h3 class="condition">weather</h3>
+            <div class="details">
+                <div class="col">
+                    <img src="images/humidity.png"> 
+                    <div class="humidityArt">
+                        <p class="humidity">Humidity</p>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png" alt="">
+                    <div class="windArt">
+                        <p class="wind">Wind</p>
+                        <p></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="meteo.js"></script>
+</body>
+</html>
