@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 // FIRST WAY OF DOING IT BUT IT HAD PROBLEMS SO I DECIDED TO START OVER
 
 // const apiKey = "f4e83224516fc36e24245ebe12c53981";
@@ -153,7 +151,6 @@
 
 // SECOND WAY OF DOING IT. DIFFERENT BUT EFFICIENT
 
->>>>>>> dev
 const apiKey = "f4e83224516fc36e24245ebe12c53981";
 let apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 const geoApiUrl = "https://api.openweathermap.org/data/2.5/weather?"
@@ -201,12 +198,7 @@ function updateWeatherUI(data) {
         "Thunderstorm": "images/thunderstorm.png",
         "Snow": "images/snow.png"
     }
-<<<<<<< HEAD
     weatherIcon.src = weatherIcons[data.weather[0].main];
-=======
-
-    weatherIcon.src = weatherIcons[data.weather[0].main] || "images/default.png";
->>>>>>> dev
     document.querySelector(".weather").style.display = "block";
     condition.innerHTML = data.weather[0].main;
 }
@@ -254,12 +246,8 @@ if (navigator.geolocation) {
 
 function validateInput(userSearchTerm) {
     userSearchTerm = userSearchTerm.trim();
-<<<<<<< HEAD
     const specialCharacter = /[^a-zA-Zà-ÿÀ-Ÿ\s-]/;
     if (specialCharacter.test(userSearchTerm) || userSearchTerm === "") {
-=======
-    if (!isNaN(userSearchTerm) || userSearchTerm === "") {
->>>>>>> dev
         searchInput.placeholder = "Enter an existing city";
         searchInput.classList.add("placeholder-red");
         return "";
