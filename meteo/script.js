@@ -93,7 +93,7 @@ if (navigator.geolocation) {
 
 function validateInput(userSearchTerm) {
     userSearchTerm = userSearchTerm.trim();
-    const specialCharacter = /[^a-zA-Z\s]/;
+    const specialCharacter = /[^a-zA-Zà-ÿÀ-Ÿ\s-]/;
     if (specialCharacter.test(userSearchTerm) || userSearchTerm === "") {
         searchInput.placeholder = "Enter an existing city";
         searchInput.classList.add("placeholder-red");
