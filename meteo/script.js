@@ -19,7 +19,6 @@ async function checkWeather(apiUrl) {
         document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
         document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
 
-        // Mettre à jour l'icône de météo en fonction des conditions
         if (data.weather[0].main === "Clouds") {
             weatherIcon.src = "images/cloudy.png";
         } else if (data.weather[0].main === "Clear") {
@@ -80,10 +79,8 @@ if (navigator.geolocation) {
 
             console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
             
-            // Remplacer la ligne API URL avec les coordonnées de géolocalisation
             let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
             
-            // Effectuer la requête avec la nouvelle URL et afficher la météo
             checkWeather(apiUrl);
         },
         (error) => {
