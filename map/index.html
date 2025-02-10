@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carte avec recherche et itinéraire</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+      #route-info {
+        margin-top: 10px;
+        padding: 10px;
+        background: #f8f9fa;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Carte interactive avec recherche et itinéraire</h1>
+    <div id="map"></div>
+    <div id="route-info">
+      <strong>Infos trajet :</strong> Sélectionnez un point de départ et
+      d'arrivée.
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <script>
+      var map = L.map('map').setView([48.8566, 2.3522], 13)
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map)
+
+      var geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false,
+      })
+        .on('markgeocode', function (e) {
+          var bbox = e.geocode.bbox
+          var poly = L.polygon([
+            bbox.getSouthEast(),
+            bbox.getNorthEast(),
+            bbox.getNorthWest(),
+            bbox.getSouthWest(),
+          ]).addTo(map)
+          map.fitBounds(poly.getBounds())
+        })
+        .addTo(map)
+
+      var startMarker, endMarker
+      var routeLayer
+
+      // Fonction de clic pour définir les points de départ et d'arrivée
+      map.on('click', function (e) {
+        if (!startMarker) {
+          startMarker = createDraggableMarker(e.latlng, 'Départ')
+        } else if (!endMarker) {
+          endMarker = createDraggableMarker(e.latlng, 'Arrivée')
+          calculateRoute()
+        }
+      })
+
+      function createDraggableMarker(latlng, label) {
+        return L.marker(latlng, { draggable: true })
+          .addTo(map)
+          .bindPopup(label)
+          .openPopup()
+          .on('dragend', calculateRoute) // Mettre à jour l'itinéraire après un déplacement
+      }
+
+      function calculateRoute() {
+        if (!startMarker || !endMarker) return
+
+        var startCoords = startMarker.getLatLng()
+        var endCoords = endMarker.getLatLng()
+
+        console.log('Start:', startCoords.lat, startCoords.lng)
+        console.log('End:', endCoords.lat, endCoords.lng)
+
+        var apiKey = '5b3ce3597851110001cf624898ef3017a9884cc38812ae37262a425f' // Mets ta propre clé API ici
+        var url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${startCoords.lng},${startCoords.lat}&end=${endCoords.lng},${endCoords.lat}`
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Erreur API ${response.status}`)
+            }
+            return response.json()
+          })
+          .then((data) => {
+            if (!data.routes || data.routes.length === 0) {
+              throw new Error('Aucun itinéraire trouvé')
+            }
+
+            if (routeLayer) map.removeLayer(routeLayer)
+
+            var routeCoords = data.routes[0].geometry.coordinates.map(
+              (coord) => [coord[1], coord[0]]
+            )
+            routeLayer = L.polyline(routeCoords, {
+              color: 'blue',
+              weight: 4,
+            }).addTo(map)
+
+            var duration = (data.routes[0].summary.duration / 60).toFixed(1)
+            document.getElementById(
+              'route-info'
+            ).innerHTML = `<strong>Temps estimé :</strong> ${duration} minutes`
+          })
+
+          .catch((error) => {
+            console.error("Erreur lors du calcul de l'itinéraire :", error)
+            document.getElementById('route-info').innerHTML =
+              "<strong>Erreur :</strong> Impossible de calculer l'itinéraire. Vérifiez votre connexion et votre clé API."
+          })
+      }
+    </script>
+  </body>
+</html>

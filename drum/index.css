@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('./img/bg-bande.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  height: 100vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keys {
+  display: flex;
+  gap: 10px;
+}
+
+.key {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: solid 1px transparent;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100px;
+  text-shadow: 0 0 (px black);
+}
+
+kbd {
+  font-size: 30px;
+}
+
+span {
+  color: brown;
+}

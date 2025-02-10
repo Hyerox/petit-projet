@@ -1,0 +1,10 @@
+obj : 
+
+les valeurs sont stockés dans un data.storage.
+
+lorsqu'un nouveau jour commence, le site est reset mais les valeurs sont toujours stockés (pour les display dans les stats (nav))
+
+possibilité de modifier les valeurs dans la meme journée,
+
+faire un bouton entrer qui va stocker ses valeurs
+

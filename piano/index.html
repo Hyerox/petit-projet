@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piano with Keyboard</title>
+  </head>
+  <body>
+    <h1>Press A, S, D, F, G, H, J to play piano notes</h1>
+
+    <script>
+      // Function to play sound for a note
+      function playSound(frequency) {
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)()
+        const oscillator = audioContext.createOscillator()
+        oscillator.type = 'sine' // Pure sine wave for a piano-like sound
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime)
+        oscillator.connect(audioContext.destination)
+        oscillator.start()
+        oscillator.stop(audioContext.currentTime + 0.5) // Play for half a second
+      }
+
+      // Map keyboard keys to piano frequencies
+      const keyMap = {
+        a: 261.63, // A key -> C4 (261.63 Hz)
+        s: 293.66, // S key -> D4 (293.66 Hz)
+        d: 329.63, // D key -> E4 (329.63 Hz)
+        f: 349.23, // F key -> F4 (349.23 Hz)
+        g: 392.0, // G key -> G4 (392.00 Hz)
+        h: 440.0, // H key -> A4 (440.00 Hz)
+        j: 493.88, // J key -> B4 (493.88 Hz)
+        k: 300,
+      }
+
+      // Listen for keydown events
+      document.addEventListener('keydown', (event) => {
+        const frequency = keyMap[event.key]
+        if (frequency) {
+          playSound(frequency) // Play the note based on frequency
+        }
+      })
+    </script>
+  </body>
+</html>

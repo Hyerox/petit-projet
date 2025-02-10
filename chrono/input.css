@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background-color: burlywood;
 }
 .inspiration-font {
-  font-family: "Inspiration", cursive;
+  font-family: 'Inspiration', cursive;
 }
